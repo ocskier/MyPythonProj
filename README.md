@@ -18,6 +18,6 @@ FLASK_ENV=development
 FLASK_APP=./server/src/main.py
 ```
 
-4. Run `yarn dev:start` ! 
+4. Run `yarn start` ! 
 
 Happy trails!

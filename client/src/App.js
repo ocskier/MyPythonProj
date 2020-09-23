@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
+import {select} from 'd3';
 import Header from './Components/Header';
+
+// const Line = () => {
+
+// }
 
 export const App = () => {
   const [books, setBooks] = useState([]);
   const [stockData, setStockData] = useState([]);
   const [time, setTime] = useState(null);
   const [error, setError] = useState(false);
+
+  const svgRef = useRef();
 
   useEffect(() => {
     async function fetchAllData() {
@@ -40,7 +47,12 @@ export const App = () => {
     fetchAllData();
   }, []);
 
-  useEffect(()=>console.log(stockData),[stockData])
+  useEffect(()=>{
+    console.log(stockData)
+    const svgElement = select(svgRef.current);
+    console.log(svgElement)
+    svgElement.append('line').attr('cx',100).attr('cy',100);
+  },[stockData])
 
   return (
     <div className="App">
@@ -59,8 +71,7 @@ export const App = () => {
             ))}
           </ul>
           <div>
-            <p>Chart gonna go here</p>
-            <p style={{textAlign: 'center'}}>{stockData[0]?.meta.symbol}</p>
+            <svg ref={svgRef} style={{border:"solid 2px blue",marginTop: '1rem'}}></svg>
           </div>
           </div>
         </div>

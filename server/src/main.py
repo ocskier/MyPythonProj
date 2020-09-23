@@ -1,3 +1,4 @@
+import requests
 import time
 import flask
 from flask import Flask,request,jsonify
@@ -5,6 +6,8 @@ from flask import Flask,request,jsonify
 app = flask.Flask(__name__)
 
 app.config["DEBUG"] = True
+
+app.config.from_pyfile('settings.py')
 
 # Create some test data for our catalog in the form of a list of dictionaries.
 books = [
@@ -78,6 +81,18 @@ def api_id():
 @app.route("/current-time")
 def get_timestamp():
   return {'time': time.time()}
+
+@app.route("/finance-data")
+def get_finance_data():
+  querystring = {"region":"US","comparisons":"XBI","symbol":"SRPT","interval":"1d","range":"6mo"}
+
+  headers = {
+    'x-rapidapi-host': "apidojo-yahoo-finance-v1.p.rapidapi.com",
+    'x-rapidapi-key': app.config.get("API_KEY")
+  }
+  response = requests.get("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-charts",headers=headers,params=querystring)
+  data = response.json()
+  return jsonify(data)
 
 app.run()
   

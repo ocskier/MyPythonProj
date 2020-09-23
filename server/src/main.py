@@ -82,7 +82,7 @@ def api_id():
 def get_timestamp():
   return {'time': time.time()}
 
-@app.route("/finance-data")
+@app.route("/finance-data", methods=['GET'])
 def get_finance_data():
   querystring = {"region":"US","comparisons":"XBI","symbol":"SRPT","interval":"1d","range":"6mo"}
 

@@ -4,7 +4,7 @@
 
 <br>
 
-A starting point boilerplate full stack project built with Python, Flask, and Create-React-App.
+A full stack project built with Python, Flask, and Create-React-App for financial stock performance.
 
 <br>
 

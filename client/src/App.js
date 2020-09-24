@@ -54,7 +54,7 @@ export const App = () => {
               }
             )
           );
-          setSymbol(financeData.chart.result[0].meta.symbol)
+          setSymbol(financeData.chart.result[0].meta.symbol);
         } else {
           setError(financeData.chart.error);
         }
@@ -80,7 +80,7 @@ export const App = () => {
         0,
         max(stockData, function (d) {
           return +Math.floor(d.close);
-        })+20,
+        }) + 20,
       ])
       .range([400, 0]);
     const svgXSeries = svgElement
@@ -103,12 +103,14 @@ export const App = () => {
       .attr("fill", "none")
       .style("stroke", "black")
       .style("stroke-width", 2)
-      .attr("d", line()
+      .attr(
+        "d",
+        line()
           .x((d) => x(d.time))
           .y((d) => y(Math.floor(d.close)))
       );
-      svgElement.append('text').text(symbol).attr('x',175).attr('y',20)
-  }, [stockData,symbol]);
+    svgElement.append("text").text(symbol).attr("x", 175).attr("y", 20);
+  }, [stockData, symbol]);
   // (d,i) => d.close[i]  (d,i) => d.time[i]
   return (
     <div className="App">
@@ -126,7 +128,7 @@ export const App = () => {
                 </li>
               ))}
             </ul>
-            <div style={{ padding:'2rem',border: '3px solid lightblue'}}>
+            <div style={{ padding: "2rem", border: "3px solid lightblue" }}>
               <svg
                 ref={svgRef}
                 width={400}

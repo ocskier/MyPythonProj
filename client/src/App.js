@@ -15,6 +15,12 @@ const useStyles = makeStyles((theme) =>
       display: "inline-flex",
       width: 400,
     },
+    hide: {
+      visibility: "hidden",
+    },
+    show: {
+      visibility: "visible",
+    }
   })
 );
 
@@ -51,7 +57,8 @@ export const App = () => {
     fetchAllData();
   }, []);
 
-  const getStockData = async () => {
+  const getStockData = async (e) => {
+    e.preventDefault();
     const financeDataRaw = await fetch(`/finance-data/${search}`);
     const financeData = await financeDataRaw.json();
     if (!financeData.chart.error) {
@@ -66,6 +73,7 @@ export const App = () => {
         )
       );
       setSymbol(financeData.chart.result[0].meta.symbol);
+      setSearch('');
     } else {
       setError(financeData.chart.error);
     }
@@ -81,7 +89,7 @@ export const App = () => {
           </p>
           <div style={{ display: "flex", justifyContent: "space-around" }}>
             <div>
-              <form className={classes.root} noValidate autoComplete="off">
+              <form onSubmit={getStockData} className={classes.root} noValidate autoComplete="off">
                 <Typography align="right" style={{ margin: "auto 8px" }}>
                   Stock
                 </Typography>
@@ -90,6 +98,7 @@ export const App = () => {
                   label="Symbol"
                   onChange={(e) => setSearch(e.target.value)}
                   variant="outlined"
+                  value={search}
                 />
                 <Button variant="contained" onClick={getStockData}>
                   Submit
@@ -104,7 +113,8 @@ export const App = () => {
                 ))}
               </ul>
             </div>
-            <div
+            <div 
+              className={stockData.length > 0 ? classes.show : classes.hide}
               style={{
                 padding: "2rem",
                 border: "3px solid lightblue",

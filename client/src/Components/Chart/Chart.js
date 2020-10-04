@@ -29,34 +29,56 @@ function Chart(props) {
         }) + 20,
       ])
       .range([400, 0]);
+
     const svgXSeries = svgElement
       .append("g")
-      .style("font", "10px sans-serif")
-      .attr("stroke", "steelblue")
+      .style("font", "12px sans-serif")
+      .attr("stroke", "transparent")
       .attr("transform", "translate(-2,398)")
-      .call(axisBottom(x));
+      .attr("class", "myXaxis");
 
     const svgYSeries = svgElement
       .append("g")
-      .style("font", "10px sans-serif")
-      .attr("stroke", "steelblue")
+      .style("font", "12px sans-serif")
+      .attr("stroke", "transparent")
       .attr("transform", "translate(-2,-3)")
+      .attr("class", "myYaxis");
+
+    const uX = svgElement
+      .selectAll(".myXaxis")
+      .transition()
+      .duration(1500)
+      .call(axisBottom(x));
+
+    const uY = svgElement
+      .selectAll(".myYaxis")
+      .attr("transform", "translate(-2,-3)")
+      .transition()
+      .duration(1000)
       .call(axisLeft(y));
 
-    svgElement
+    const u = svgElement.selectAll(".linePts").data([props.data], function (d) {
+      return d.time;
+    });
+
+    u.enter()
       .append("path")
-      .datum(props.data)
+      .attr("class", "linePts")
       .attr("fill", "none")
       .style("stroke", "black")
       .style("stroke-width", 2)
+      .merge(u)
+      .transition()
+      .duration(2000)
       .attr(
         "d",
         line()
           .x((d) => x(d.time))
           .y((d) => y(Math.floor(d.close)))
       );
-    svgElement.append("text").text(props.symbol).attr("x", 175).attr("y", 20);
-  }, [props.data,props.symbol]);
+    svgElement.selectAll(".textSymbol").remove();
+    svgElement.append("text").attr('class','textSymbol').text(props.symbol).attr("x", 175).attr("y", 20);
+  }, [props.data, props.symbol]);
 
   return (
     <svg

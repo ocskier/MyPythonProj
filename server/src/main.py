@@ -82,9 +82,9 @@ def api_id():
 def get_timestamp():
   return {'time': time.time()}
 
-@app.route("/finance-data", methods=['GET'])
-def get_finance_data():
-  querystring = {"region":"US","comparisons":"XBI","symbol":"SRPT","interval":"1d","range":"6mo"}
+@app.route("/finance-data/<symbol>", methods=['GET'])
+def get_finance_data(symbol):
+  querystring = {"region":"US","comparisons":"XBI","symbol":symbol,"interval":"1d","range":"6mo"}
 
   headers = {
     'x-rapidapi-host': "apidojo-yahoo-finance-v1.p.rapidapi.com",

@@ -61,21 +61,15 @@ export const App = () => {
     e.preventDefault();
     const financeDataRaw = await fetch(`/finance-data/${search}`);
     const financeData = await financeDataRaw.json();
-    if (!financeData.chart.error) {
+    console.log(financeData);
+    if (!financeData.error) {
       setStockData(
-        financeData.chart.result[0].indicators.adjclose[0].adjclose.map(
-          (close, i) => {
-            return {
-              close: close,
-              time: financeData.chart.result[0].timestamp[i] * 1000,
-            };
-          }
-        )
+        financeData.stockData
       );
-      setSymbol(financeData.chart.result[0].meta.symbol);
+      setSymbol(financeData.symbol);
       setSearch('');
     } else {
-      setError(financeData.chart.error);
+      setError(financeData.error);
     }
   };
 

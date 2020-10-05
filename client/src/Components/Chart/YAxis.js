@@ -31,7 +31,7 @@ export const YAxis = function ({ chartRef, data }) {
         .transition()
         .duration(1000)
         .call(axisLeft(yScale(data)));
-  }, [data]);
+  }, [chartRef, data]);
 
   return <></>;
 };

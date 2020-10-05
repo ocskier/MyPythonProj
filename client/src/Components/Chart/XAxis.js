@@ -29,7 +29,7 @@ export const XAxis = function ({ chartRef, data }) {
         .transition()
         .duration(1500)
         .call(axisBottom(xScale(data)));
-  }, [data]);
+  }, [chartRef, data]);
 
   return <></>;
 };

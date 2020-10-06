@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
+import clsx from 'clsx';
 
-import { Button, TextField, Typography } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 
 import Chart from "./Components/Chart";
@@ -10,18 +10,17 @@ import './App.css';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-    root: {
-      "& > *": {
-        margin: theme.spacing(1),
-      },
-      display: "inline-flex",
-      width: 400,
-    },
     hide: {
       visibility: "hidden",
     },
     show: {
       visibility: "visible",
+    },
+    chartCtn: {
+      padding: "2rem",
+      border: "3px solid lightblue",
+      width: "min-content",
+      marginTop: "15rem"
     }
   })
 );
@@ -77,30 +76,14 @@ export const App = () => {
 
   return (
     <div className="App">
-      <Header />
+      <Header search={search} setSearch={setSearch} searchClickHandler={getStockData}/>
       {!error ? (
         <div className='main'>
           <p className="pt-2 text-center text-success">
             {!time ? "Loading..." : `Server time: ${time}`}
           </p>
-          <div style={{ display: "flex", justifyContent: "space-around", flexWrap: 'wrap' }}>
+          <div style={{ display: "flex", justifyContent: "space-around", flexWrap: 'wrap', flexDirection: 'row-reverse' }}>
             <div>
-              <form onSubmit={getStockData} className={classes.root} noValidate autoComplete="off">
-                <Typography align="right" style={{ margin: "auto 8px" }}>
-                  Stock
-                </Typography>
-                <TextField
-                  id="outlined-basic"
-                  label="Symbol"
-                  onChange={(e) => setSearch(e.target.value)}
-                  variant="outlined"
-                  value={search}
-                />
-                <Button variant="contained" onClick={getStockData}>
-                  Submit
-                </Button>
-              </form>
-              <hr></hr>
               <ul>
                 {books.map((book, i) => (
                   <li key={i}>
@@ -109,14 +92,7 @@ export const App = () => {
                 ))}
               </ul>
             </div>
-            <div 
-              className={stockData.length > 0 ? classes.show : classes.hide}
-              style={{
-                padding: "2rem",
-                border: "3px solid lightblue",
-                width: "min-content",
-              }}
-            >
+            <div className={clsx(classes.chartCtn, stockData.length > 0 ? classes.show : classes.hide)} >
               <Chart symbol={symbol} data={stockData}></Chart>
             </div>
           </div>

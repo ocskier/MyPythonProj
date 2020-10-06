@@ -1,11 +1,7 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-// import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
+
+import { AppBar, InputBase, Toolbar, Typography } from "@material-ui/core";
 import { fade, makeStyles } from '@material-ui/core/styles';
-// import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,23 +34,24 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(1),
       width: 'auto',
     },
+    display: "inline-flex",
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
-    pointerEvents: 'none',
+    // pointerEvents: 'none',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    right: '-10px'
   },
   inputRoot: {
     color: 'inherit',
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    paddingLeft: `calc(1em)`,
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
@@ -66,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header() {
+export default function Header({search, setSearch, searchClickHandler}) {
   const classes = useStyles();
 
   return (
@@ -84,19 +81,24 @@ export default function Header() {
           <Typography className={classes.title} variant="h6" noWrap>
             Financial App using Python
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
+          <form  className={classes.search} onSubmit={searchClickHandler} noValidate autoComplete="off">
+            <Typography align="right" style={{ margin: "auto 8px" }}>
+                  Stock
+            </Typography>
             <InputBase
+              onChange={(e) => setSearch(e.target.value)}
               placeholder="Search…"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              value={search}
             />
-          </div>
+            <div className={classes.searchIcon} onClick={searchClickHandler}>
+              <SearchIcon />
+            </div>
+          </form>
         </Toolbar>
       </AppBar>
     </div>

@@ -6,6 +6,8 @@ import { createStyles, makeStyles } from "@material-ui/core/styles";
 import Chart from "./Components/Chart";
 import Header from "./Components/Header";
 
+import './App.css';
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
@@ -77,11 +79,11 @@ export const App = () => {
     <div className="App">
       <Header />
       {!error ? (
-        <div>
+        <div className='main'>
           <p className="pt-2 text-center text-success">
             {!time ? "Loading..." : `Server time: ${time}`}
           </p>
-          <div style={{ display: "flex", justifyContent: "space-around" }}>
+          <div style={{ display: "flex", justifyContent: "space-around", flexWrap: 'wrap' }}>
             <div>
               <form onSubmit={getStockData} className={classes.root} noValidate autoComplete="off">
                 <Typography align="right" style={{ margin: "auto 8px" }}>

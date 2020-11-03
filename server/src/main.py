@@ -1,7 +1,7 @@
 import requests
 import time
 import flask
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 
 app = flask.Flask(__name__, static_url_path='', static_folder='build', template_folder="build")
 

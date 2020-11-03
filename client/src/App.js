@@ -16,12 +16,19 @@ const useStyles = makeStyles((theme) =>
     show: {
       visibility: "visible",
     },
+    ctn: {
+      display: "flex",
+      justifyContent: "space-around",
+      flexWrap: "wrap",
+      flexDirection: "row-reverse",
+      marginBottom: "100px",
+    },
     chartCtn: {
       padding: "2rem",
       border: "3px solid lightblue",
       width: "min-content",
-      marginTop: "15rem"
-    }
+      marginTop: "15rem",
+    },
   })
 );
 
@@ -82,7 +89,7 @@ export const App = () => {
           <p className="pt-2 text-center text-success">
             {!time ? "Loading..." : `Server time: ${time}`}
           </p>
-          <div style={{ display: "flex", justifyContent: "space-around", flexWrap: 'wrap', flexDirection: 'row-reverse', marginBottom: '100px' }}>
+          <div className={classes.ctn}>
             <div>
               <ul>
                 {books.map((book, i) => (

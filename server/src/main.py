@@ -3,9 +3,9 @@ import time
 import flask
 from flask import Flask, request, jsonify
 
-app = flask.Flask(__name__)
+app = flask.Flask(__name__, static_url_path='', static_folder='build', template_folder="build")
 
-app.config["DEBUG"] = True
+# app.config["DEBUG"] = True
 
 app.config.from_pyfile('settings.py')
 
@@ -75,7 +75,9 @@ def get_finance_data(symbol):
 
     return jsonify({"symbol": data['chart']['result'][0]['meta']['symbol'], "stockData": filtered_stock_prices,'error': data['chart']['error']})
 
-app.run()
+@app.route("/")
+def my_index():
+    return render_template("index.html")
 
 # financeData.chart.result[0].indicators.adjclose[0].adjclose.map(
 #           (close, i) => {

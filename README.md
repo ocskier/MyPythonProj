@@ -43,7 +43,7 @@ yarn install
 ## Usage
 
 ```bash
-yarn start
+yarn dev:start
 ```
 
 ## Running Tests

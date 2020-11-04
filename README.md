@@ -8,7 +8,7 @@ A full stack project built with Python, Flask, and Create-React-App for financia
 
 <br>
 
-<img width=200 height=200 src="https://avatars1.githubusercontent.com/u/36890724?v=4">
+<img width=200 height=200 src="client\public\fabian-blank-pElSkGRA2NU-unsplash.jpg">
 
 ## Prerequisites
 

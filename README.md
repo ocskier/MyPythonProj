@@ -13,6 +13,7 @@ A full stack project built with Python, Flask, and Create-React-App for financia
 ## Prerequisites
 
 <a href="https://nodejs.org/en/"><img width=80 height=80 src="./logo.svg"></a>
+
 * pipenv
 * Node 12.12
 * Yarn 1.19
@@ -26,6 +27,13 @@ A full stack project built with Python, Flask, and Create-React-App for financia
 FLASK_ENV=development
 FLASK_APP=./server/src/main.py
 ```
+
+- Add a `.env` file with the following:
+
+```python
+RAPID_API_KEY=YOURKEY
+```
+
 - Run
 
 ```bash

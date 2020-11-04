@@ -1,4 +1,4 @@
-# MyPythonProj
+# Stock Dashboard
   
   <img style="border-radius: 20px;" src="https://img.shields.io/static/v1?label=LICENSE&message=MIT&color=BLUE&style=for-the-badge">
 

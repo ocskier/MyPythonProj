@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 export const App = () => {
-  const [books, setBooks] = useState([]);
+  const [searchedStocks, setSearchedSTocks] = useState([]);
   const [search, setSearch] = useState("");
   const [symbol, setSymbol] = useState(null);
   const [stockData, setStockData] = useState([]);
@@ -61,9 +61,7 @@ export const App = () => {
         } else {
           setError(response.statusText);
         }
-        const booksResRaw = await fetch("/api/books");
-        const booksData = await booksResRaw.json();
-        setBooks(booksData);
+        setSearchedSTocks(["SRPT", "ACAD"]);
       } catch (err) {
         setError(err);
       }
@@ -99,10 +97,10 @@ export const App = () => {
           <div className={classes.ctn}>
             <div>
               <ul>
-                {books.map((book, i) => (
-                  <li key={i}>
-                    {book.title} - {book.author}
-                  </li>
+                {searchedStocks.map((stock, i) => (
+                  <button key={i}>
+                    {stock}
+                  </button>
                 ))}
               </ul>
             </div>

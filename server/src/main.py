@@ -10,23 +10,12 @@ app = flask.Flask(__name__, static_url_path='', static_folder='build', template_
 app.config.from_pyfile('settings.py')
 
 # Create some test data for our catalog in the form of a list of dictionaries.
-books = [
-    {
-        "title": "The Dead Zone",
-        "author": "Stephen King",
-        "synopsis":
-        "A number-one national best seller about a man who wakes up from a five-year coma able to see people's futures and the terrible fate awaiting mankind in The Dead Zone - a \"compulsive page-turner\" (The Atlanta Journal-Constitution). Johnny Smith awakens from a five-year coma after his car accident and discovers that he can see people's futures and pasts when he touches them. Many consider his talent a gift; Johnny feels cursed. His fiancée married another man during his coma, and people clamor for him to solve their problems. When Johnny has a disturbing vision after he shakes the hand of an ambitious and amoral politician, he must decide if he should take drastic action to change the future. The Dead Zone is a \"faultlessly paced...continuously engrossing\" (Los Angeles Times) novel of second sight.",
-        "date": time.gmtime()
-    },
-]
+stocks = []
+
+# @app.route('/api/v1/resources/stocks/all', methods=['GET'])
 
 
-# @app.route('/api/v1/resources/books/all', methods=['GET'])
-# def api_all():
-#     return jsonify(books)
-
-
-@app.route('/api/books', methods=['GET'])
+@app.route('/api/stocks', methods=['GET'])
 def api_id():
     # Check if an ID was provided as part of the URL.
     # If ID is provided, assign it to a variable.
@@ -34,16 +23,16 @@ def api_id():
     if 'id' in request.args:
         id = int(request.args['id'])
     else:
-        return jsonify(books)
+        return jsonify(stocks)
 
     # Create an empty list for our results
     results = []
 
     # Loop through the data and match results that fit the requested ID.
     # IDs are unique, but other fields might return many results
-    for book in books:
-        if book['id'] == id:
-            results.append(book)
+    for stock in stocks:
+        if stock['id'] == id:
+            results.append(stock)
 
     # Use the jsonify function from Flask to convert our list of
     # Python dictionaries to the JSON format.

@@ -88,7 +88,7 @@ export const App = () => {
   return (
     <div className="App">
       <Header search={search} setSearch={setSearch} searchClickHandler={getStockData}/>
-      <img class={classes.pigPic} src='/fabian-blank-pElSkGRA2NU-unsplash.jpg'></img>
+      <img className={classes.pigPic} src='/fabian-blank-pElSkGRA2NU-unsplash.jpg'></img>
       {!error ? (
         <div className='main'>
           <p className="pt-2 text-center text-success">

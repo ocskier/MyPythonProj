@@ -21,14 +21,20 @@ const useStyles = makeStyles((theme) =>
       justifyContent: "space-around",
       flexWrap: "wrap",
       flexDirection: "row-reverse",
-      marginBottom: "100px",
+      marginBottom: "120px",
     },
     chartCtn: {
       padding: "2rem",
       border: "3px solid lightblue",
       width: "min-content",
-      marginTop: "15rem",
+      marginTop: "8rem",
     },
+    pigPic: {
+      position: 'absolute',
+      width: '100%',
+      zIndex: -1,
+      opacity: 0.66,
+    }
   })
 );
 
@@ -84,6 +90,7 @@ export const App = () => {
   return (
     <div className="App">
       <Header search={search} setSearch={setSearch} searchClickHandler={getStockData}/>
+      <img class={classes.pigPic} src='/fabian-blank-pElSkGRA2NU-unsplash.jpg'></img>
       {!error ? (
         <div className='main'>
           <p className="pt-2 text-center text-success">

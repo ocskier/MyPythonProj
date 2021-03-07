@@ -2,6 +2,7 @@ import requests
 import time
 import flask
 from flask import Flask, request, jsonify, render_template
+from requests.exceptions import RequestException
 
 app = flask.Flask(__name__, static_url_path='', static_folder='build', template_folder="build")
 
@@ -46,23 +47,30 @@ def get_timestamp():
 
 @app.route("/finance-data/<symbol>", methods=['GET'])
 def get_finance_data(symbol):
-    querystring = {"region": "US", "comparisons": "XBI",
+    querystring1 = {"symbol":symbol,"region":"US"}
+    querystring2 = {"region": "US", "comparisons": "XBI",
                    "symbol": symbol, "interval": "1d", "range": "6mo"}
 
     headers = {
         'x-rapidapi-host': "apidojo-yahoo-finance-v1.p.rapidapi.com",
         'x-rapidapi-key': app.config.get("API_KEY")
     }
-    response = requests.get(
-        "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-charts", headers=headers, params=querystring)
-    data = response.json()
+    try:
+        response1 = requests.get(
+            "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-profile", headers=headers, params=querystring1)
+        response2 = requests.get(
+            "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-charts", headers=headers, params=querystring2)
+    except RequestException:
+        print("Error with Data!")
 
+    profile_data = response1.json()
+    price_data = response2.json()
     filtered_stock_prices = []
-    for index, price in enumerate(data['chart']['result'][0]['indicators']['adjclose'][0]['adjclose']):
+    for index, price in enumerate(price_data['chart']['result'][0]['indicators']['adjclose'][0]['adjclose']):
         filtered_stock_prices.append(
-            {"close": price, "time": data['chart']['result'][0]['timestamp'][index] * 1000})
+            {"close": price, "time": price_data['chart']['result'][0]['timestamp'][index] * 1000})
 
-    return jsonify({"symbol": data['chart']['result'][0]['meta']['symbol'], "stockData": filtered_stock_prices,'error': data['chart']['error']})
+    return jsonify({"site": profile_data["assetProfile"]["website"],"symbol": price_data['chart']['result'][0]['meta']['symbol'], "stockData": filtered_stock_prices,'error': price_data['chart']['error']})
 
 @app.route("/")
 def my_index():

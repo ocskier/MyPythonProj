@@ -61,6 +61,7 @@ const springStyles = {
 };
 
 export const App = () => {
+  const [company, setCompany] = useState("")
   const [searchedStocks, setSearchedSTocks] = useState([]);
   const [search, setSearch] = useState("");
   const [symbol, setSymbol] = useState(null);
@@ -104,6 +105,7 @@ export const App = () => {
       setStockData(
         financeData.stockData
       );
+      setCompany(financeData.site.split('http://www.')[1]);
       setSymbol(financeData.symbol);
       search && setSearch('');
     } else {
@@ -164,16 +166,16 @@ export const App = () => {
       {!error ? (
         <div className="main">
           <p className="pt-2 text-center text-success">
-            {!time ? "Loading..." : `Server time: ${time}`}
+            {!time ? 'Loading...' : `Server time: ${time}`}
           </p>
           <div className={classes.ctn}>
             <div
               style={{
-                display: "flex",
-                flexDirection: "column",
+                display: 'flex',
+                flexDirection: 'column',
               }}
             >
-              {!open && <span style={{marginLeft: '6%'}}>Stocks</span>}
+              {!open && <span style={{ marginLeft: '6%' }}>Stocks</span>}
               <animated.div
                 style={{
                   ...springStyles.ctn,
@@ -181,13 +183,17 @@ export const App = () => {
                   width: size,
                   height: size,
                 }}
-                onClick={() => setOpen((open) => !open)} >
+                onClick={() => setOpen((open) => !open)}
+              >
                 {transitions.map(({ item, key, props }) => (
                   <animated.div
                     key={key}
                     style={{ ...props, ...springStyles.item }}
                   >
-                    <button onClick={() => getSavedSearch(item.symbol)} style={{ background: item.css, width: "100%" }}>
+                    <button
+                      onClick={() => getSavedSearch(item.symbol)}
+                      style={{ background: item.css, width: '100%' }}
+                    >
                       {item.symbol}
                     </button>
                   </animated.div>
@@ -200,9 +206,17 @@ export const App = () => {
                 stockData.length > 0 ? classes.show : classes.hide
               )}
             >
+              <img src={`https://logo.uplead.com/${company}`} width="100"></img>
               <Chart symbol={symbol} data={stockData}></Chart>
             </div>
           </div>
+          <a
+            href="https://www.uplead.com/?_ga=2.255801416.1914784608.1615136862-1413120390.1615136862"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Logos provided by UpLead
+          </a>
         </div>
       ) : (
         <p className="pt-2 text-center text-error">{error}</p>

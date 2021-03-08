@@ -58,19 +58,30 @@ def get_finance_data(symbol):
     try:
         response1 = requests.get(
             "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-profile", headers=headers, params=querystring1)
+    except RequestException  as e:
+        print(e)
+
+    try: 
         response2 = requests.get(
-            "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-charts", headers=headers, params=querystring2)
-    except RequestException:
-        print("Error with Data!")
+        "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-charts", headers=headers, params=querystring2)
+    except RequestException as e:
+        print(e)
 
     profile_data = response1.json()
     price_data = response2.json()
+
     filtered_stock_prices = []
     for index, price in enumerate(price_data['chart']['result'][0]['indicators']['adjclose'][0]['adjclose']):
         filtered_stock_prices.append(
             {"close": price, "time": price_data['chart']['result'][0]['timestamp'][index] * 1000})
-
-    return jsonify({"site": profile_data["assetProfile"]["website"],"symbol": price_data['chart']['result'][0]['meta']['symbol'], "stockData": filtered_stock_prices,'error': price_data['chart']['error']})
+       
+    if "website" in profile_data["assetProfile"]:
+        return jsonify({"site": profile_data["assetProfile"]["website"], "symbol": price_data['chart']['result'][0]['meta']['symbol'], 
+        "stockData": filtered_stock_prices,'error': price_data['chart']['error']})
+    else:
+        return jsonify({"site": "", "symbol": price_data['chart']['result'][0]['meta']['symbol'], 
+        "stockData": filtered_stock_prices,'error': price_data['chart']['error']})
+    
 
 @app.route("/")
 def my_index():
